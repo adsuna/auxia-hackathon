@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
       LEFT JOIN session_reviews sr ON sr.tutor_id = u.id
       LEFT JOIN tutor_subjects ts ON ts.tutor_id = u.id
       WHERE u.is_tutor = TRUE
-      GROUP BY u.id
+      GROUP BY u.id 
     )
     SELECT u.id,
            (u.first_name || ' ' || u.last_name) AS name,
