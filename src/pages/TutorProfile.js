@@ -8,6 +8,8 @@ const TutorProfile = () => {
   const [tutor, setTutor] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [messageOpen, setMessageOpen] = useState(false);
+  const [messageText, setMessageText] = useState('');
 
   useEffect(() => {
     const fetchTutor = async () => {
@@ -125,7 +127,7 @@ const TutorProfile = () => {
                 <Calendar className="h-5 w-5 inline mr-2" />
                 Book Session
               </Link>
-              <button className="btn-secondary">
+              <button className="btn-secondary" onClick={() => setMessageOpen(true)}>
                 <MessageCircle className="h-5 w-5 inline mr-2" />
                 Send Message
               </button>
@@ -177,6 +179,35 @@ const TutorProfile = () => {
           </div>
         </div>
       </div>
+
+      {messageOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Message {tutor.name}</h3>
+            <textarea
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              placeholder="Introduce yourself and share what you need help with"
+              rows={5}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+            <div className="mt-4 flex justify-end space-x-2">
+              <button className="btn-secondary" onClick={() => setMessageOpen(false)}>Cancel</button>
+              <button
+                className="btn-primary"
+                onClick={async () => {
+                  await api.post('/messages', { recipientId: tutor.id, content: messageText });
+                  setMessageText('');
+                  setMessageOpen(false);
+                }}
+                disabled={!messageText.trim()}
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Reviews */}
       <div className="bg-white rounded-xl shadow-sm p-6">
