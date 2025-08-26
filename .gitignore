@@ -37,4 +37,6 @@ Thumbs.db
 
 # Uploads
 uploads/
+.claude/
+.kiro/
 temp/
