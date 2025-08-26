@@ -129,6 +129,15 @@ async function seed() {
     await createSession(studentAnanyaId, tutorNehaId, engId, 4, '13:00', 2.0, 'in-person', 'confirmed', 1800);
 
     console.log('Demo data seeded (India-focused)');
+    // Seed sample tutor documents
+    const addDoc = (tutorId, type, title, url) => query(
+      `INSERT INTO tutor_documents (tutor_id, doc_type, title, url, verified)
+       VALUES ($1,$2,$3,$4,TRUE) ON CONFLICT DO NOTHING`,
+      [tutorId, type, title, url]
+    );
+    await addDoc(tutorAaravId, 'degree', 'B.Tech CSE - IIT Delhi', 'https://example.in/docs/aarav-btech.pdf');
+    await addDoc(tutorIshaId, 'degree', 'B.Sc Mathematics - DU', 'https://example.in/docs/isha-bsc.pdf');
+    await addDoc(tutorNehaId, 'certificate', 'AutoCAD Professional Certificate', 'https://example.in/docs/neha-autocad.pdf');
   } finally {
     await pool.end();
   }
