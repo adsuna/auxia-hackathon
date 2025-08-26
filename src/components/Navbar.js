@@ -40,6 +40,7 @@ const Navbar = () => {
                     <User className="h-4 w-4 text-primary-600" />
                   </div>
                   <span className="text-sm text-gray-700">{user.name}</span>
+                  <span className="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded-full">{user.campusCredits ?? 0} credits</span>
                 </div>
                 <button
                   onClick={handleLogout}

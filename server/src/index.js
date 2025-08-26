@@ -9,6 +9,7 @@
  import subjectsRouter from './routes/subjects.js';
  import sessionsRouter from './routes/sessions.js';
  import leaderboardRouter from './routes/leaderboard.js';
+ import documentsRouter from './routes/documents.js';
  
  const app = express();
  
@@ -31,6 +32,7 @@
  app.use('/api/tutors', tutorsRouter);
  app.use('/api/sessions', sessionsRouter);
  app.use('/api/leaderboard', leaderboardRouter);
+ app.use('/api/documents', documentsRouter);
  
  const port = process.env.PORT || 4000;
  app.listen(port, () => {
