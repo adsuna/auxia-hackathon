@@ -11,6 +11,7 @@
  import leaderboardRouter from './routes/leaderboard.js';
  import documentsRouter from './routes/documents.js';
  import messagesRouter from './routes/messages.js';
+
  
  const app = express();
  
@@ -35,6 +36,7 @@
  app.use('/api/leaderboard', leaderboardRouter);
  app.use('/api/documents', documentsRouter);
  app.use('/api/messages', messagesRouter);
+
  
  const port = process.env.PORT || 4000;
  app.listen(port, () => {

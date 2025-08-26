@@ -7,6 +7,7 @@ const TutorProfile = () => {
   const { id } = useParams();
   const [tutor, setTutor] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [messageOpen, setMessageOpen] = useState(false);
   const [messageText, setMessageText] = useState('');
@@ -17,12 +18,15 @@ const TutorProfile = () => {
         const { data } = await api.get(`/tutors/${id}`);
         setTutor(data);
         setReviews(data.reviews || []);
+        const docs = await api.get(`/documents/${id}`);
+        setDocuments(docs.data || []);
       } finally {
         setLoading(false);
       }
     };
     fetchTutor();
   }, [id]);
+
 
   if (loading) {
     return (
@@ -208,6 +212,25 @@ const TutorProfile = () => {
           </div>
         </div>
       )}
+=======
+      {/* Proof of Skill / Documents */
+      }
+      <div className="bg-white rounded-xl shadow-sm p-6">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Proof of Degree & Certificates</h2>
+        {documents.length === 0 ? (
+          <p className="text-gray-600">No documents added yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {documents.map((d) => (
+              <a key={d.id} href={d.url} target="_blank" rel="noreferrer" className="border border-gray-200 rounded-lg p-4 hover:shadow-sm">
+                <div className="text-sm text-gray-500 mb-1 uppercase">{d.doc_type}</div>
+                <div className="font-medium text-gray-900">{d.title}</div>
+                <div className="text-xs text-gray-500 mt-1">Added on {d.created_at} {d.verified ? '• Verified' : ''}</div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Reviews */}
       <div className="bg-white rounded-xl shadow-sm p-6">
